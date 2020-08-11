@@ -6,7 +6,9 @@ const childProcess = require('child_process');
 const execFile = promisify(childProcess.execFile);
 
 // Binary source → https://github.com/sindresorhus/macos-wallpaper
-const binary = path.join(__dirname, 'macos-wallpaper');
+const binary = path.join(path.resolve(), 'node_modules/wallpaper/source/macos-wallpaper.exe')
+	.replace(/\b(\w*main\w*)\b/g, 'renderer')
+	.replace('/..', '');
 
 exports.get = async ({screen = 'main'} = {}) => {
 	let {stdout} = await execFile(binary, ['get', '--screen', screen]);
